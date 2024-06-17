@@ -13,6 +13,7 @@ namespace WinTest
     public class WtLogSync : WinTestLogBase
     {
         private IPAddress localbroadcastIP;
+        private int localbroadcastPort;
 
         private wtListener wtl;
 
@@ -20,8 +21,18 @@ namespace WinTest
 
         public WtLogSync(LogWriteMessageDelegate mylog) : base(mylog)
         {
-            localbroadcastIP = WinTest.GetIpIFBroadcastAddress();
-            wtl = new wtListener(WinTest.WinTestDefaultPort);
+            if (WinTest.advancedNetActivated)
+            {
+                localbroadcastIP = WinTest.advancedWinTestBroadcastAddress;
+                localbroadcastPort = WinTest.advancedWinTestPort;
+            }
+            else
+            {
+                localbroadcastIP = WinTest.GetIpIFBroadcastAddress();
+                localbroadcastPort = WinTest.WinTestDefaultPort;
+            }
+            
+            wtl = new wtListener(localbroadcastPort);
             wtl.wtMessageReceived += wtMessageReceivedHandler;
 
             QSO.Columns.Add("RUNSTN");
@@ -59,7 +70,7 @@ namespace WinTest
                 client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
                 client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);
                 client.Client.ReceiveTimeout = 10000;
-                IPEndPoint groupEp = new IPEndPoint(localbroadcastIP, WinTest.WinTestDefaultPort);
+                IPEndPoint groupEp = new IPEndPoint(localbroadcastIP, localbroadcastPort);
                 client.Connect(groupEp);
                 //Console.WriteLine("send: " + Msg.Data);
                 byte[] b = Msg.ToBytes();
