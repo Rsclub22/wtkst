@@ -114,6 +114,7 @@ namespace wtKST
         private GroupBox groupBox1;
         private GroupBox groupBox4;
         public CheckBox cb_QARTest_Active;
+        private Button btn_advanced_WT_network_options;
         public CheckBox cb_WinTest_Active;
 
         public OptionsDlg()
@@ -217,6 +218,7 @@ namespace wtKST
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cb_QARTest_Active = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_advanced_WT_network_options = new System.Windows.Forms.Button();
             this.cb_WinTestNet_Active = new System.Windows.Forms.CheckBox();
             this.tb_Options_WinTest_Station_Name = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -658,6 +660,7 @@ namespace wtKST
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_advanced_WT_network_options);
             this.groupBox2.Controls.Add(this.cb_WinTestNet_Active);
             this.groupBox2.Controls.Add(this.tb_Options_WinTest_Station_Name);
             this.groupBox2.Controls.Add(this.label10);
@@ -669,6 +672,16 @@ namespace wtKST
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Win-Test Network sync";
+            // 
+            // btn_advanced_WT_network_options
+            // 
+            this.btn_advanced_WT_network_options.Location = new System.Drawing.Point(329, 36);
+            this.btn_advanced_WT_network_options.Name = "btn_advanced_WT_network_options";
+            this.btn_advanced_WT_network_options.Size = new System.Drawing.Size(75, 23);
+            this.btn_advanced_WT_network_options.TabIndex = 14;
+            this.btn_advanced_WT_network_options.Text = "Advanced Network";
+            this.btn_advanced_WT_network_options.UseVisualStyleBackColor = true;
+            this.btn_advanced_WT_network_options.Click += new System.EventHandler(this.btn_advanced_WT_network_options_Click);
             // 
             // cb_WinTestNet_Active
             // 
@@ -1583,6 +1596,12 @@ namespace wtKST
                 this.cb_WinTest_Active.Enabled = true;
                 this.cb_WinTestNet_Active.Enabled = true;
             }
+        }
+
+        private void btn_advanced_WT_network_options_Click(object sender, EventArgs e)
+        {
+            AdvancedWinTestNetwork advancedWinTestNetworkForm = new AdvancedWinTestNetwork();
+            advancedWinTestNetworkForm.ShowDialog();
         }
     }
 }
