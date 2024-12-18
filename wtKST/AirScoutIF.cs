@@ -39,6 +39,43 @@ namespace wtKST
 #endif
         }
 
+        public enum AS_STATE
+        {
+            AS_INACTIVE,
+            AS_UPDATING,
+            AS_IN_SYNC,
+        };
+
+        private AS_STATE asState = AS_STATE.AS_INACTIVE;
+
+        public AS_STATE ASState
+        {
+            get { return asState; }
+            protected set
+            {
+                asState = value;
+                if (ASStateChanged != null)
+                {
+                    ASStateChanged(this, new ASStateEventArgs(asState));
+                }
+            }
+        }
+
+        public event EventHandler<ASStateEventArgs> ASStateChanged;
+        public class ASStateEventArgs : EventArgs
+        {
+            /// <summary>
+            /// called when ASState changes
+            /// </summary>
+            public ASStateEventArgs(AS_STATE ASState)
+            {
+                this.ASState = ASState;
+            }
+            public AS_STATE ASState { get; private set; }
+        }
+
+        DateTime mTimestamp = DateTime.UtcNow;
+
         private void wtMessageReceivedHandler(object sender, WinTest.wtListener.wtMessageEventArgs e)
         {
             if (e.Msg.Msg == WTMESSAGES.ASNEAREST && e.Msg.HasChecksum)
@@ -66,6 +103,12 @@ namespace wtKST
                         Console.WriteLine("got AS " + dxcall + " " + e.Msg.Data + " in " + stopWatch.ElapsedMilliseconds);
 #endif
                         waitHandle.Set();
+
+                        if (DateTime.UtcNow.Subtract(mTimestamp).TotalMilliseconds < 30000)
+                            ASState = AS_STATE.AS_IN_SYNC;
+                        else
+                            ASState = AS_STATE.AS_UPDATING;
+                        mTimestamp = DateTime.UtcNow;
                     }
 #if DEBUG_AS
                     else
@@ -103,6 +146,14 @@ namespace wtKST
         public string qrg_from_settings()
         {
             string qrg = "1440000";
+            if (Settings.Default.AS_QRG == "50M")
+            {
+                qrg = "500000";
+            }
+            if (Settings.Default.AS_QRG == "70M")
+            {
+                qrg = "700000";
+            }
             if (Settings.Default.AS_QRG == "432M")
             {
                 qrg = "4320000";
@@ -187,6 +238,7 @@ namespace wtKST
                     Console.WriteLine("timeout " + dxcall);
 #endif
                     bw_GetPlanes.ReportProgress(0, dxcall);
+                    ASState = AS_STATE.AS_INACTIVE;
                     return false;
                 }
                 return true;
@@ -195,6 +247,7 @@ namespace wtKST
             {
                 bw_GetPlanes.ReportProgress(0, null);
                 bw_GetPlanes.ReportProgress(-1, dxcall);
+                ASState = AS_STATE.AS_INACTIVE;
                 return false;
             }
         }
@@ -217,7 +270,9 @@ namespace wtKST
                     for (int i = 0; i < planecount; i++)
                     {
                         PlaneInfo info = new PlaneInfo(a[6 + i * 5], a[7 + i * 5], Convert.ToInt32(a[8 + i * 5]), Convert.ToInt32(a[9 + i * 5]), Convert.ToInt32(a[10 + i * 5]));
-                        infolist.Add(info);
+                        // ignore entries too far into the future
+                        if (info.Mins < 30)
+                            infolist.Add(info);
                     }
                     planes.Remove(dxcall);
                     if (infolist.Count > 0)

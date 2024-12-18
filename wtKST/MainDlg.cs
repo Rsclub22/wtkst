@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,13 +14,14 @@ using System.Threading;
 using System.Windows.Forms;
 using WinTest;
 using wtKST.Properties;
+using Application = System.Windows.Forms.Application;
 
 namespace wtKST
 {
     public class MainDlg : Form
     {
 
-        private static readonly string[] BANDS = new string[] { "144M", "432M", "1_2G", "2_3G", "3_4G", "5_7G", "10G", "24G", "47G", "76G" };
+        private static readonly string[] BANDS = new string[] { "50M", "70M", "144M", "432M", "1_2G", "2_3G", "3_4G", "5_7G", "10G", "24G", "47G", "76G" };
 
         private KSTcom KST;
 
@@ -57,7 +59,7 @@ namespace wtKST
 
         private Label lbl_KST_Calls;
 
-        private ListView lv_Msg;
+        private System.Windows.Forms.ListView lv_Msg;
 
         private ColumnHeader lvh_Time;
 
@@ -69,7 +71,7 @@ namespace wtKST
 
         private Label lbl_KST_Msg;
 
-        private ListView lv_MyMsg;
+        private System.Windows.Forms.ListView lv_MyMsg;
 
         private ColumnHeader columnHeader1;
 
@@ -110,7 +112,7 @@ namespace wtKST
 
         private ToolStripStatusLabel tsl_Info;
 
-        private Button btn_KST_Send;
+        private System.Windows.Forms.Button btn_KST_Send;
 
         private ToolStripStatusLabel tsl_Error;
 
@@ -126,13 +128,15 @@ namespace wtKST
 
         private System.Windows.Forms.Timer ti_Error;
 
-        private ComboBox cb_Command;
+        private System.Windows.Forms.ComboBox cb_Command;
 
         private System.Windows.Forms.Timer ti_Top;
 
         private System.Windows.Forms.Timer ti_Reconnect;
 
-        private ToolTip tt_Info;
+        private System.Windows.Forms.ToolTip tt_Info;
+
+        private System.Windows.Forms.Timer ti_UpdateFilter;
 
         private BackgroundWorker bw_GetPlanes;
 
@@ -180,6 +184,9 @@ namespace wtKST
         private ToolStripMenuItem menu_btn_macro_0;
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripMenuItem macro_default_Station;
+        private ToolStripStatusLabel tsl_LED_AS_Status;
+        private ToolStripStatusLabel tsl_LED_Log_Status;
+        private ToolStripStatusLabel tsl_LED_KST_Status;
         private string AS_watchlist = "";
 
         public MainDlg()
@@ -206,6 +213,7 @@ namespace wtKST
             KST.process_user_update += KST_Process_user_update;
             KST.update_user_state += onUserStateChanged;
             KST.dispText += KST_dispText;
+            KST.KSTStateChanged += KST_StateChanged;
 
             CALL.Columns.Add("CALL");
             CALL.Columns.Add("NAME");
@@ -248,6 +256,8 @@ namespace wtKST
             lv_Calls.Columns["DIR"].Visible = false;
             lv_Calls.Columns["AWAY"].Visible = false;
             lv_Calls.Columns["COLOR"].Visible = false;
+            lv_Calls.Columns["50M"].Width = 20;
+            lv_Calls.Columns["70M"].Width = 20;
             lv_Calls.Columns["144M"].Width = 20;
             lv_Calls.Columns["432M"].Width = 20;
             lv_Calls.Columns["1_2G"].Width = 20;
@@ -276,6 +286,7 @@ namespace wtKST
             UpdateUserBandsWidth();
             bw_GetPlanes.RunWorkerAsync();
             AS_if = new wtKST.AirScoutInterface(ref bw_GetPlanes);
+            AS_if.ASStateChanged += AS_StateChanged;
             if (Settings.Default.KST_AutoConnect)
             {
                 KST.Connect();
@@ -285,29 +296,6 @@ namespace wtKST
                 WinTest.WinTest.advancedWinTestPort = int.Parse(Settings.Default.AdvancedWinTestNetwork_UDPPort);
                 WinTest.WinTest.advancedWinTestBroadcastAddress = IPAddress.Parse(Settings.Default.AdvancedWinTestNetwork_BroadcastIP);
             }
-        }
-
-        private void set_KST_Status()
-        {
-            if (KST.State < KSTcom.KST_STATE.Connected)
-            {
-                lbl_KST_Status.BackColor = Color.LightGray;
-                lbl_KST_Status.Text = "Status: Disconnected ";
-                return;
-            }
-            lbl_KST_Status.BackColor = Color.PaleTurquoise;
-            lbl_KST_Status.Text = string.Concat(new string[]
-            {
-                "Status: Connected to ",
-                Settings.Default.KST_Chat,
-                " chat   [",
-                Settings.Default.KST_UserName,
-                " ",
-                Settings.Default.KST_Name,
-                " ",
-                Settings.Default.KST_Loc,
-                "]"
-            });
         }
 
         private void onUserStateChanged(object sender, KSTcom.userStateEventArgs args)
@@ -339,6 +327,106 @@ namespace wtKST
                 Say(args.text);
         }
 
+        private void KST_StateChanged(object sender, KSTcom.KSTStateEventArgs args)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler<KSTcom.KSTStateEventArgs>(KST_StateChanged), new object[] { sender, args });
+                return;
+            }
+            // from set_KST_Status
+            if (args.KSTState < KSTcom.KST_STATE.Connected)
+            {
+                lbl_KST_Status.BackColor = Color.LightGray;
+                lbl_KST_Status.Text = "Status: Disconnected ";
+            }
+            else
+            {
+                lbl_KST_Status.BackColor = Color.PaleTurquoise;
+                lbl_KST_Status.Text = string.Concat(new string[]
+                {
+                "Status: Connected to ",
+                Settings.Default.KST_Chat,
+                " chat   [",
+                Settings.Default.KST_UserName,
+                " ",
+                Settings.Default.KST_Name,
+                " ",
+                Settings.Default.KST_Loc,
+                "]"
+                });
+            }
+            // "LED" handling
+            switch (args.KSTState)
+            {
+                default:
+                    if (tsl_LED_KST_Status.BackColor != Color.Red)
+                        tsl_LED_KST_Status.BackColor = Color.Red;
+                    break;
+                case KSTcom.KST_STATE.WaitLogin:
+                case KSTcom.KST_STATE.WaitLogstat:
+                case KSTcom.KST_STATE.Disconnecting:
+                    if (tsl_LED_KST_Status.BackColor != Color.Yellow)
+                        tsl_LED_KST_Status.BackColor = Color.Yellow;
+                    break;
+                case KSTcom.KST_STATE.Connected:
+                    if (tsl_LED_KST_Status.BackColor != Color.Green)
+                        tsl_LED_KST_Status.BackColor = Color.Green;
+                    break;
+            }
+        }
+
+
+        private void AS_StateChanged(object sender, AirScoutInterface.ASStateEventArgs args)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler<AirScoutInterface.ASStateEventArgs>(AS_StateChanged), new object[] { sender, args });
+                return;
+            }
+            switch (args.ASState)
+            {
+                default:
+                    if (tsl_LED_AS_Status.BackColor != Color.Red)
+                        tsl_LED_AS_Status.BackColor = Color.Red;
+                    break;
+                case AirScoutInterface.AS_STATE.AS_UPDATING:
+                    if (tsl_LED_AS_Status.BackColor != Color.Yellow)
+                        tsl_LED_AS_Status.BackColor = Color.Yellow;
+                    break;
+                case AirScoutInterface.AS_STATE.AS_IN_SYNC:
+                    if (tsl_LED_AS_Status.BackColor != Color.Green)
+                        tsl_LED_AS_Status.BackColor = Color.Green;
+                    break;
+            }
+        }
+
+        private void Log_StateChanged(object sender, WinTestLogBase.LogStateEventArgs args)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler<WinTestLogBase.LogStateEventArgs>(Log_StateChanged), new object[] { sender, args });
+                return;
+            }
+            switch (args.LogState)
+            {
+                default:
+                    if (tsl_LED_Log_Status.BackColor != Color.Red)
+                        tsl_LED_Log_Status.BackColor = Color.Red;
+                    break;
+                case WinTestLogBase.LOG_STATE.LOG_SYNCING:
+                    if (tsl_LED_Log_Status.BackColor != Color.Yellow)
+                        tsl_LED_Log_Status.BackColor = Color.Yellow;
+                    break;
+                case WinTestLogBase.LOG_STATE.LOG_IN_SYNC:
+                    if (tsl_LED_Log_Status.BackColor != Color.Green)
+                        tsl_LED_Log_Status.BackColor = Color.Green;
+                    break;
+            }
+        }
+
+        private DateTime KST_Update_User_Filter_last_called = DateTime.Now;
+
         private void OnIdle(object sender, EventArgs args)
         {
             KST.KSTStateMachine();
@@ -364,7 +452,8 @@ namespace wtKST
                     ti_Reconnect.Start();
                 }
 
-                KST.State = KSTcom.KST_STATE.Standby;
+                KST.SetStateStandby();
+                KST_USR_RowFilter = "";
             }
             if (KST.State >= KSTcom.KST_STATE.Connected)
             {
@@ -379,9 +468,18 @@ namespace wtKST
                 {
                     ti_Reconnect.Stop();
                 }
+                if (KST_USR_RowFilter.Equals(""))
+                    KST_Update_Usr_Filter(); // initial filter
+
+                // rate limit - ideally calling filter update should not be needed here
+                // should be triggered appropriately
+                if (KST_Update_User_Filter_last_called.AddSeconds(1) <= DateTime.Now)
+                {
+                    KST_Update_Usr_Filter(true); // only check filter here! it should not have changed
+                    KST_Update_User_Filter_last_called = DateTime.Now;
+                }
             }
 
-            KST_Update_Usr_Filter();
             fill_AS_list();
 
             string KST_Calls_Text = lbl_KST_Calls.Text;
@@ -414,8 +512,6 @@ namespace wtKST
             {
                 lbl_KST_MyMsg.Text = "My Messages";
             }
-
-            set_KST_Status();
 
             ni_Main.Text = "wtKST\nLeft click to activate";
 
@@ -723,11 +819,39 @@ namespace wtKST
 
         private string KST_USR_RowFilter = "";
 
-        private void KST_Update_Usr_Filter()
+        private void KSTUsrFilterSetTimer(int setTimer, bool force_wait)
+        {
+
+            if (force_wait)
+            {
+                ti_UpdateFilter.Stop();
+            }
+            else if (ti_UpdateFilter.Enabled)
+            {
+                return; // timer is already triggered, don't reprogram
+            }
+            ti_UpdateFilter.Interval = setTimer;
+            ti_UpdateFilter.Enabled = true;
+        }
+
+        private void ti_UpdateFilter_Tick(object sender, EventArgs e)
+        {
+            KST_Update_Usr_Filter(false);
+            ti_UpdateFilter.Stop();
+        }
+
+        private void KST_Update_Usr_Filter(bool check = false)
         {
             string RowFilter = string.Format("(CALL <> '{0}')", Settings.Default.KST_UserName.ToUpper());
             if (hide_away)
                 RowFilter += string.Format(" AND (AWAY = 0)");
+
+            if (ignore_inactive)
+            {
+                var last_activity_max = DateTime.UtcNow.AddMinutes(-120);
+                RowFilter += string.Format(" AND (CONTACTED < 3)");
+                RowFilter += string.Format(" AND (TIME > #{0}#)", last_activity_max.ToString("g", CultureInfo.InvariantCulture.DateTimeFormat));
+            }
 
             int MaxDist = Convert.ToInt32(Settings.Default.KST_MaxDist);
             if (MaxDist != 0)
@@ -754,6 +878,15 @@ namespace wtKST
 
             if (!RowFilter.Equals(KST_USR_RowFilter))
             {
+                if (check)
+                {
+                    // just check if a change would have an effect
+                    Console.WriteLine("RowFilter is " + KST_USR_RowFilter);
+                    Console.WriteLine("should be " + RowFilter);
+                    MainDlg.Log.WriteMessage("RowFilter is " + KST_USR_RowFilter);
+                    MainDlg.Log.WriteMessage("should be " + RowFilter);
+                    return;
+                }
                 // remember the vertical scroll position as the rowfilter will screw it up
                 // it is reset in OnIdle
                 var Keep_FirstDisplayedScrollingRowIndex = lv_Calls.FirstDisplayedScrollingRowIndex;
@@ -860,6 +993,10 @@ namespace wtKST
         private List<bandinfo> selected_bands()
         {
             List<bandinfo> b = new List<bandinfo>();
+            if (Settings.Default.Band_50)
+                b.Add(new bandinfo("50MHz", "6 m", 50000, 52000, 50000));
+            if (Settings.Default.Band_70)
+                b.Add(new bandinfo("70MHz", "4 m", 70000, 70500, 70000));
             if (Settings.Default.Band_144)
                 b.Add(new bandinfo("144MHz", "2 m", 144000, 146000, 144000));
             if (Settings.Default.Band_432)
@@ -886,6 +1023,8 @@ namespace wtKST
         // hide bands that should not be displayed by making their width = 0
         private void UpdateUserBandsWidth()
         {
+            lv_Calls.Columns["50M"].Visible = Settings.Default.Band_50;
+            lv_Calls.Columns["70M"].Visible = Settings.Default.Band_70;
             lv_Calls.Columns["144M"].Visible = Settings.Default.Band_144;
             lv_Calls.Columns["432M"].Visible = Settings.Default.Band_432;
             lv_Calls.Columns["1_2G"].Visible = Settings.Default.Band_1296;
@@ -901,6 +1040,12 @@ namespace wtKST
         bool check_in_log(DataRow row)
         {
             // FIXME use selected_bands()
+            if (Settings.Default.Band_50 &&
+                !QRVdb.worked_or_not_qrv((QRVdb.QRV_STATE)row["50M"]))
+                return false;
+            if (Settings.Default.Band_70 &&
+                !QRVdb.worked_or_not_qrv((QRVdb.QRV_STATE)row["70M"]))
+                return false;
             if (Settings.Default.Band_144 &&
                 !QRVdb.worked_or_not_qrv((QRVdb.QRV_STATE)row["144M"]))
                 return false;
@@ -968,7 +1113,6 @@ namespace wtKST
                     lv_MyMsg.Items.Clear();
                 }
                 UpdateUserBandsWidth();
-                set_KST_Status();
                 if (KST_MaxDist != Convert.ToInt32(Settings.Default.KST_MaxDist))
                     KST_Update_Usr_Filter();
                 macro_RefreshMacroText();
@@ -1026,6 +1170,7 @@ namespace wtKST
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                 {
                     wtQSO = new WinTest.WinTestLog(MainDlg.Log.WriteMessage);
+                    wtQSO.LogStateChanged += Log_StateChanged;
                 }
                 if (wts == null)
                     wts = new WinTest.wtStatus();
@@ -1050,6 +1195,7 @@ namespace wtKST
                 wtQSO = new WtLogSync(MainDlg.Log.WriteMessage);
                 if (wts == null)
                     wts = new WinTest.wtStatus();
+                wtQSO.LogStateChanged += Log_StateChanged;
             }
             else if (Settings.Default.QARTest_Sync_active)
             {
@@ -1074,6 +1220,7 @@ namespace wtKST
                     Console.WriteLine("wts active - turn off");
                     wts = null;
                 }
+                wtQSO.LogStateChanged += Log_StateChanged;
             }
             else
             {
@@ -1089,6 +1236,7 @@ namespace wtKST
                     Console.WriteLine("wts active - turn off");
                     wts = null;
                 }
+                Log_StateChanged(this, new WinTest.WinTestLogBase.LogStateEventArgs(WinTestLogBase.LOG_STATE.LOG_INACTIVE));
             }
         }
 
@@ -1214,7 +1362,6 @@ namespace wtKST
                                 {
                                     MessageBox.Show("KST locator " + Settings.Default.KST_Loc + " does not match locator in Win-Test " + wtQSO.MyLoc + " !!!", "Win-Test Log",
                                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    set_KST_Status();
                                 }
                                 wtQSO_local_lock = false;
 
@@ -1400,22 +1547,40 @@ namespace wtKST
                     }
                     e.Handled = true;
                 }
-                else
+                else if (e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex || e.ColumnIndex == dgv.Columns["LOC"].DisplayIndex
+                      || e.ColumnIndex == dgv.Columns["CONTACTED"].DisplayIndex)
                 {
-                    if (e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex || e.ColumnIndex == dgv.Columns["LOC"].DisplayIndex || e.ColumnIndex == dgv.Columns["CONTACTED"].DisplayIndex)
+                    e.PaintBackground(e.ClipBounds, false);
+
+                    // columns with filter function (CALL, ACT column - Band handled above)
+                    if ((e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex && hide_away) ||
+                        (e.ColumnIndex == dgv.Columns["CONTACTED"].DisplayIndex && ignore_inactive))
                     {
-                        // CALL column
-                        if ((e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex && hide_away) ||
-                            (e.ColumnIndex == dgv.Columns["LOC"].DisplayIndex && sort_by_dir) ||
-                            (e.ColumnIndex == dgv.Columns["CONTACTED"].DisplayIndex && ignore_inactive))
-                        {
-                            e.PaintBackground(e.ClipBounds, false);
-                            e.Graphics.FillRectangle(Brushes.LightGray, e.CellBounds);
-                            e.PaintContent(e.CellBounds);
-                            e.Handled = true;
-                            return;
-                        }
+                        e.Graphics.FillRectangle(Brushes.LightGray, e.CellBounds);
                     }
+
+                    // mark sorting column - draw text + icon
+                    if ((e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex) ||
+                        (e.ColumnIndex == dgv.Columns["LOC"].DisplayIndex))
+                    {
+                        //Draw Text Custom
+                        TextRenderer.DrawText(e.Graphics, string.Format("{0}", e.FormattedValue),
+                        e.CellStyle.Font, e.CellBounds, e.CellStyle.ForeColor,
+                        TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+
+                        //Draw Sort Icon
+                        var sortIcon = ((e.ColumnIndex == dgv.Columns["LOC"].DisplayIndex && sort_by_dir) ||
+                            (e.ColumnIndex == dgv.Columns["CALL"].DisplayIndex && !sort_by_dir)) ? "▼" : " ";
+                        //Or draw an icon here.
+                        TextRenderer.DrawText(e.Graphics, sortIcon,
+                            e.CellStyle.Font, e.CellBounds, e.CellStyle.ForeColor,
+                            TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+                    }
+                    else
+                    {
+                        e.PaintContent(e.CellBounds);
+                    }
+                    e.Handled = true;
                 }
             }
             else
@@ -1625,6 +1790,8 @@ namespace wtKST
                 {
                     dgv.Sort(dgv.Columns["CALL"], ListSortDirection.Ascending);
                 }
+                else if (e.ColumnIndex > dgv.Columns["AS"].DisplayIndex)
+                    KSTUsrFilterSetTimer(3000, true); // when one changes the band status, wait 3s to give some time to make further changes until the row hides
             }
         }
 
@@ -1852,6 +2019,7 @@ namespace wtKST
                     hide_away = false;
                 else
                     hide_away = true;
+                KST_Update_Usr_Filter();
                 return;
             }
 
@@ -1868,6 +2036,7 @@ namespace wtKST
                     sort_by_dir = true;
                     dgv.Sort(dgv.Columns["DIR"], ListSortDirection.Ascending);
                 }
+                KST_Update_Usr_Filter();
                 return;
             }
 
@@ -1878,6 +2047,7 @@ namespace wtKST
                     ignore_inactive = false;
                 else
                     ignore_inactive = true;
+                KST_Update_Usr_Filter();
                 return;
             }
             // band columns
@@ -1887,6 +2057,7 @@ namespace wtKST
                     hide_worked = false;
                 else
                     hide_worked = true;
+                KST_Update_Usr_Filter();
                 return;
             }
         }
@@ -2019,6 +2190,13 @@ namespace wtKST
                     ShowToolTip(ToolTipText, dgv, dgv.PointToClient(Cursor.Position));
                 }
             }
+        }
+
+        private void lv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            // TODO we get this event when AS column changes - could be ignored, but no idea how to find out which column changed
+            KSTUsrFilterSetTimer(100, false);
         }
 
         private string lv_msg_control_url_shown_from_Call = "";
@@ -2511,7 +2689,6 @@ namespace wtKST
         }
 
         /* send the current list of CALLS to AS server - allows AS to batch process
-         * TODO: better to send only calls that are not away or still needed
          */
         private void AS_send_ASWATCHLIST()
         {
@@ -2652,6 +2829,9 @@ namespace wtKST
             this.ss_Main = new System.Windows.Forms.StatusStrip();
             this.tsl_Info = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsl_Error = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsl_LED_AS_Status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsl_LED_Log_Status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsl_LED_KST_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -2709,6 +2889,7 @@ namespace wtKST
             this.ti_Top = new System.Windows.Forms.Timer(this.components);
             this.ti_Reconnect = new System.Windows.Forms.Timer(this.components);
             this.tt_Info = new System.Windows.Forms.ToolTip(this.components);
+            this.ti_UpdateFilter = new System.Windows.Forms.Timer(this.components);
             this.bw_GetPlanes = new System.ComponentModel.BackgroundWorker();
             this.cmn_userlist = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmn_userlist_wtsked = new System.Windows.Forms.ToolStripMenuItem();
@@ -2742,7 +2923,10 @@ namespace wtKST
             // 
             this.ss_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsl_Info,
-            this.tsl_Error});
+            this.tsl_Error,
+            this.tsl_LED_KST_Status,
+            this.tsl_LED_AS_Status,
+            this.tsl_LED_Log_Status});
             this.ss_Main.Location = new System.Drawing.Point(0, 708);
             this.ss_Main.Name = "ss_Main";
             this.ss_Main.Size = new System.Drawing.Size(1202, 22);
@@ -2760,9 +2944,43 @@ namespace wtKST
             this.tsl_Error.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tsl_Error.ForeColor = System.Drawing.Color.Red;
             this.tsl_Error.Name = "tsl_Error";
-            this.tsl_Error.Size = new System.Drawing.Size(1159, 17);
+            this.tsl_Error.Text = "";
+            this.tsl_Error.Size = new System.Drawing.Size(1108, 17);
             this.tsl_Error.Spring = true;
             this.tsl_Error.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tsl_LED_KST_Status
+            // 
+            this.tsl_LED_KST_Status.AutoSize = false;
+            this.tsl_LED_KST_Status.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.tsl_LED_KST_Status.Margin = new System.Windows.Forms.Padding(7, 5, 1, 5);
+            this.tsl_LED_KST_Status.Name = "tsl_LED_KST_Status";
+            this.tsl_LED_KST_Status.Size = new System.Drawing.Size(12, 12);
+            this.tsl_LED_KST_Status.Text = "ON4KST Chat Status LED";
+            this.tsl_LED_KST_Status.ToolTipText = "ON4KST Chat Status LED";
+            this.tsl_LED_KST_Status.BackColor = Color.Red;
+            // 
+            // tsl_LED_AS_Status
+            // 
+            this.tsl_LED_AS_Status.AutoSize = false;
+            this.tsl_LED_AS_Status.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.tsl_LED_AS_Status.Margin = new System.Windows.Forms.Padding(7, 5, 1, 5);
+            this.tsl_LED_AS_Status.Name = "tsl_LED_AS_Status";
+            this.tsl_LED_AS_Status.Size = new System.Drawing.Size(12, 12);
+            this.tsl_LED_AS_Status.Text = "Airscout Status LED";
+            this.tsl_LED_AS_Status.ToolTipText = "Airscout Status LED";
+            this.tsl_LED_AS_Status.BackColor = Color.Red;
+            // 
+            // tsl_LED_Log_Status
+            // 
+            this.tsl_LED_Log_Status.AutoSize = false;
+            this.tsl_LED_Log_Status.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.tsl_LED_Log_Status.Margin = new System.Windows.Forms.Padding(7, 5, 1, 5);
+            this.tsl_LED_Log_Status.Name = "tsl_LED_AS_Status";
+            this.tsl_LED_Log_Status.Size = new System.Drawing.Size(12, 12);
+            this.tsl_LED_Log_Status.Text = "Log sync Status LED";
+            this.tsl_LED_Log_Status.ToolTipText = "Log sync Status LED";
+            this.tsl_LED_Log_Status.BackColor = Color.Red;
             // 
             // splitContainer1
             // 
@@ -3014,6 +3232,7 @@ namespace wtKST
             this.lv_Calls.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.lv_Calls_ColumnClick);
             this.lv_Calls.ClientSizeChanged += new System.EventHandler(this.lv_Calls_clientSizeChanged);
             this.lv_Calls.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.lv_Calls_mousewheel_event);
+            this.lv_Calls.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.lv_DataBindingComplete);
             // 
             // lbl_KST_Calls
             // 
@@ -3318,6 +3537,10 @@ namespace wtKST
             // 
             this.tt_Info.ShowAlways = true;
             // 
+            // ti_UpdateFilter
+            // 
+            this.ti_UpdateFilter.Tick += new System.EventHandler(this.ti_UpdateFilter_Tick);
+            // 
             // bw_GetPlanes
             // 
             this.bw_GetPlanes.WorkerReportsProgress = true;
@@ -3488,8 +3711,8 @@ namespace wtKST
             cmdLine = cmdLine.Replace("$BAND", band);
 
             cb_Command.Text = cmdLine;
-
-
+            cb_Command.SelectionStart = cmdLine.Length;
+            cb_Command.SelectionLength = 0;
         }
 
         private void kst_macro_bt1_Click(object sender, EventArgs e)
