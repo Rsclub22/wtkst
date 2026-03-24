@@ -14,7 +14,9 @@ namespace WinTest
     public class WtLogSync : WinTestLogBase
     {
         private IPAddress localbroadcastIP;
+
         private int localbroadcastPort;
+
 
         private wtListener wtl;
 
@@ -22,6 +24,7 @@ namespace WinTest
 
         public WtLogSync(LogWriteMessageDelegate mylog) : base(mylog)
         {
+
             if (WinTest.advancedNetActivated)
             {
                 localbroadcastIP = WinTest.advancedWinTestBroadcastAddress;
@@ -34,6 +37,7 @@ namespace WinTest
             }
             
             wtl = new wtListener(localbroadcastPort);
+
             wtl.wtMessageReceived += wtMessageReceivedHandler;
 
             lock (QSOlock)
@@ -73,7 +77,9 @@ namespace WinTest
                 client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
                 client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);
                 client.Client.ReceiveTimeout = 10000;
+
                 IPEndPoint groupEp = new IPEndPoint(localbroadcastIP, localbroadcastPort);
+
                 client.Connect(groupEp);
                 //Console.WriteLine("send: " + Msg.Data);
                 byte[] b = Msg.ToBytes();
