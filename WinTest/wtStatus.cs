@@ -36,6 +36,7 @@ namespace WinTest
 
         public wtStatus()
         {
+
             int localbroadcastPort;
             if (WinTest.advancedNetActivated)
             {
@@ -47,6 +48,7 @@ namespace WinTest
             }
 
             wtl = new wtListener(localbroadcastPort);
+
             wtl.wtMessageReceived += wtMessageReceivedHandler;
             wtStatusList = new BindingList<wtStat>();
 
