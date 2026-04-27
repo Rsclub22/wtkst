@@ -780,7 +780,7 @@ namespace wtKST
             // 
             this.cb_WinTest_Active.AutoSize = true;
             this.cb_WinTest_Active.Checked = global::wtKST.Properties.Settings.Default.WinTest_Activate;
-            this.cb_WinTest_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "WinTest_Activate", true));
+            this.cb_WinTest_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "WinTest_Activate", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cb_WinTest_Active.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_WinTest_Active.Location = new System.Drawing.Point(8, 22);
             this.cb_WinTest_Active.Name = "cb_WinTest_Active";
@@ -792,7 +792,7 @@ namespace wtKST
             // 
             // tb_Options_WinTest_INI
             // 
-            this.tb_Options_WinTest_INI.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WinTest_INI_Filename", true));
+            this.tb_Options_WinTest_INI.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WinTest_INI_Filename", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_Options_WinTest_INI.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_Options_WinTest_INI.Location = new System.Drawing.Point(112, 40);
             this.tb_Options_WinTest_INI.Name = "tb_Options_WinTest_INI";
@@ -840,7 +840,7 @@ namespace wtKST
             this.checkBox76GHz.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox76GHz.Checked = global::wtKST.Properties.Settings.Default.Band_76GHz;
             this.checkBox76GHz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox76GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_76GHz", true));
+            this.checkBox76GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_76GHz", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox76GHz.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox76GHz.Location = new System.Drawing.Point(257, 96);
             this.checkBox76GHz.Name = "checkBox76GHz";
@@ -855,7 +855,7 @@ namespace wtKST
             this.checkBox10GHz.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox10GHz.Checked = global::wtKST.Properties.Settings.Default.Band_10368;
             this.checkBox10GHz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox10GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_10368", true));
+            this.checkBox10GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_10368", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox10GHz.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox10GHz.Location = new System.Drawing.Point(257, 73);
             this.checkBox10GHz.Name = "checkBox10GHz";
@@ -870,7 +870,7 @@ namespace wtKST
             this.checkBox24GHz.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox24GHz.Checked = global::wtKST.Properties.Settings.Default.Band_24GHz;
             this.checkBox24GHz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox24GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_24GHz", true));
+            this.checkBox24GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_24GHz", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox24GHz.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox24GHz.Location = new System.Drawing.Point(48, 96);
             this.checkBox24GHz.Name = "checkBox24GHz";
@@ -885,7 +885,7 @@ namespace wtKST
             this.checkBox47GHz.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox47GHz.Checked = global::wtKST.Properties.Settings.Default.Band_47GHz;
             this.checkBox47GHz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox47GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_47GHz", true));
+            this.checkBox47GHz.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_47GHz", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox47GHz.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox47GHz.Location = new System.Drawing.Point(156, 96);
             this.checkBox47GHz.Name = "checkBox47GHz";
@@ -900,7 +900,7 @@ namespace wtKST
             this.checkBox2320.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox2320.Checked = global::wtKST.Properties.Settings.Default.Band_2320;
             this.checkBox2320.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2320.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_2320", true));
+            this.checkBox2320.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_2320", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox2320.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox2320.Location = new System.Drawing.Point(244, 50);
             this.checkBox2320.Name = "checkBox2320";
@@ -915,7 +915,7 @@ namespace wtKST
             this.checkBox3400.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox3400.Checked = global::wtKST.Properties.Settings.Default.Band_3400;
             this.checkBox3400.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3400.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_3400", true));
+            this.checkBox3400.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_3400", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox3400.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox3400.Location = new System.Drawing.Point(35, 73);
             this.checkBox3400.Name = "checkBox3400";
@@ -930,7 +930,7 @@ namespace wtKST
             this.checkBox5760.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox5760.Checked = global::wtKST.Properties.Settings.Default.Band_5760;
             this.checkBox5760.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5760.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_5760", true));
+            this.checkBox5760.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_5760", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox5760.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox5760.Location = new System.Drawing.Point(143, 73);
             this.checkBox5760.Name = "checkBox5760";
@@ -945,7 +945,7 @@ namespace wtKST
             this.checkBox1296.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox1296.Checked = global::wtKST.Properties.Settings.Default.Band_1296;
             this.checkBox1296.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1296.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_1296", true));
+            this.checkBox1296.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_1296", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox1296.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox1296.Location = new System.Drawing.Point(143, 50);
             this.checkBox1296.Name = "checkBox1296";
@@ -960,7 +960,7 @@ namespace wtKST
             this.checkBox432.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox432.Checked = global::wtKST.Properties.Settings.Default.Band_432;
             this.checkBox432.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox432.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_432", true));
+            this.checkBox432.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_432", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox432.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox432.Location = new System.Drawing.Point(41, 50);
             this.checkBox432.Name = "checkBox432";
@@ -975,7 +975,7 @@ namespace wtKST
             this.checkBox144.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox144.Checked = global::wtKST.Properties.Settings.Default.Band_144;
             this.checkBox144.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox144.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_144", true));
+            this.checkBox144.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_144", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox144.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox144.Location = new System.Drawing.Point(250, 27);
             this.checkBox144.Name = "checkBox144";
@@ -990,7 +990,7 @@ namespace wtKST
             this.checkBox70.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox70.Checked = global::wtKST.Properties.Settings.Default.Band_70;
             this.checkBox70.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox70.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_70", true));
+            this.checkBox70.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_70", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox70.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox70.Location = new System.Drawing.Point(155, 27);
             this.checkBox70.Name = "checkBox70";
@@ -1005,7 +1005,7 @@ namespace wtKST
             this.checkBox50.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBox50.Checked = global::wtKST.Properties.Settings.Default.Band_50;
             this.checkBox50.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox50.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_50", true));
+            this.checkBox50.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "Band_50", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox50.Location = new System.Drawing.Point(47, 27);
             this.checkBox50.Name = "checkBox50";
@@ -1056,7 +1056,7 @@ namespace wtKST
             // 
             // cb_AS_QRG
             // 
-            this.cb_AS_QRG.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_QRG", true));
+            this.cb_AS_QRG.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_QRG", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cb_AS_QRG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_AS_QRG.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_AS_QRG.FormattingEnabled = true;
@@ -1127,7 +1127,7 @@ namespace wtKST
             // 
             // tb_Options_AS_My_Name
             // 
-            this.tb_Options_AS_My_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_My_Name", true));
+            this.tb_Options_AS_My_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_My_Name", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_Options_AS_My_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_Options_AS_My_Name.Location = new System.Drawing.Point(220, 19);
             this.tb_Options_AS_My_Name.Name = "tb_Options_AS_My_Name";
@@ -1137,7 +1137,7 @@ namespace wtKST
             // 
             // tb_AS_MinDist
             // 
-            this.tb_AS_MinDist.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_MinDist", true));
+            this.tb_AS_MinDist.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_MinDist", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_AS_MinDist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_AS_MinDist.Location = new System.Drawing.Point(240, 45);
             this.tb_AS_MinDist.Name = "tb_AS_MinDist";
@@ -1147,7 +1147,7 @@ namespace wtKST
             // 
             // tb_Options_AS_Server_Name
             // 
-            this.tb_Options_AS_Server_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Server_Name", true));
+            this.tb_Options_AS_Server_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Server_Name", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_Options_AS_Server_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_Options_AS_Server_Name.Location = new System.Drawing.Point(103, 19);
             this.tb_Options_AS_Server_Name.Name = "tb_Options_AS_Server_Name";
@@ -1157,7 +1157,7 @@ namespace wtKST
             // 
             // tb_AS_MaxDist
             // 
-            this.tb_AS_MaxDist.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_MaxDist", true));
+            this.tb_AS_MaxDist.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_MaxDist", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_AS_MaxDist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_AS_MaxDist.Location = new System.Drawing.Point(377, 45);
             this.tb_AS_MaxDist.Name = "tb_AS_MaxDist";
@@ -1193,7 +1193,7 @@ namespace wtKST
             // 
             this.cb_AS_local.AutoSize = true;
             this.cb_AS_local.Checked = global::wtKST.Properties.Settings.Default.AS_Local_Active;
-            this.cb_AS_local.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "AS_Local_Active", true));
+            this.cb_AS_local.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "AS_Local_Active", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cb_AS_local.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_AS_local.Location = new System.Drawing.Point(33, 35);
             this.cb_AS_local.Name = "cb_AS_local";
@@ -1228,7 +1228,7 @@ namespace wtKST
             // 
             this.cb_AS_Active.AutoSize = true;
             this.cb_AS_Active.Checked = global::wtKST.Properties.Settings.Default.AS_Active;
-            this.cb_AS_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "AS_Active", true));
+            this.cb_AS_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "AS_Active", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cb_AS_Active.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_AS_Active.Location = new System.Drawing.Point(13, 13);
             this.cb_AS_Active.Name = "cb_AS_Active";
@@ -1240,7 +1240,7 @@ namespace wtKST
             // 
             // tb_AS_Timeout
             // 
-            this.tb_AS_Timeout.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Timeout", true));
+            this.tb_AS_Timeout.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Timeout", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_AS_Timeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_AS_Timeout.Location = new System.Drawing.Point(387, 10);
             this.tb_AS_Timeout.Name = "tb_AS_Timeout";
@@ -1250,7 +1250,7 @@ namespace wtKST
             // 
             // tb_Options_AS_Local_Server_Name
             // 
-            this.tb_Options_AS_Local_Server_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Local_Name", true));
+            this.tb_Options_AS_Local_Server_Name.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "AS_Local_Name", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_Options_AS_Local_Server_Name.Enabled = global::wtKST.Properties.Settings.Default.AS_Local_Active;
             this.tb_Options_AS_Local_Server_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tb_Options_AS_Local_Server_Name.Location = new System.Drawing.Point(305, 33);
@@ -1277,7 +1277,7 @@ namespace wtKST
             // 
             // tb_WS_Password
             // 
-            this.tb_WS_Password.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_Password", true));
+            this.tb_WS_Password.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_Password", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_WS_Password.Location = new System.Drawing.Point(341, 37);
             this.tb_WS_Password.Name = "tb_WS_Password";
             this.tb_WS_Password.PasswordChar = '*';
@@ -1296,7 +1296,7 @@ namespace wtKST
             // 
             // tb_WS_API_URL
             // 
-            this.tb_WS_API_URL.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_API_URL", true));
+            this.tb_WS_API_URL.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_API_URL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_WS_API_URL.Location = new System.Drawing.Point(79, 99);
             this.tb_WS_API_URL.Name = "tb_WS_API_URL";
             this.tb_WS_API_URL.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1315,7 +1315,7 @@ namespace wtKST
             // 
             // tb_WS_LoginURL
             // 
-            this.tb_WS_LoginURL.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_LoginURL", true));
+            this.tb_WS_LoginURL.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_LoginURL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_WS_LoginURL.Location = new System.Drawing.Point(79, 73);
             this.tb_WS_LoginURL.Name = "tb_WS_LoginURL";
             this.tb_WS_LoginURL.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1343,7 +1343,7 @@ namespace wtKST
             // 
             // tb_WS_Username
             // 
-            this.tb_WS_Username.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_Username", true));
+            this.tb_WS_Username.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "WS_Username", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tb_WS_Username.Location = new System.Drawing.Point(121, 37);
             this.tb_WS_Username.Name = "tb_WS_Username";
             this.tb_WS_Username.Size = new System.Drawing.Size(87, 20);
@@ -1355,7 +1355,7 @@ namespace wtKST
             this.cb_WS_Active.AutoSize = true;
             this.cb_WS_Active.Checked = global::wtKST.Properties.Settings.Default.WS_Active;
             this.cb_WS_Active.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_WS_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "WS_Active", true));
+            this.cb_WS_Active.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "WS_Active", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cb_WS_Active.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_WS_Active.Location = new System.Drawing.Point(13, 14);
             this.cb_WS_Active.Name = "cb_WS_Active";
@@ -1407,7 +1407,7 @@ namespace wtKST
             // 
             // textBox2
             // 
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_9", true));
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_9", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.textBox2.Location = new System.Drawing.Point(90, 210);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(374, 20);
@@ -1425,7 +1425,7 @@ namespace wtKST
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M9", true));
+            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M9", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox1.Location = new System.Drawing.Point(70, 213);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(15, 14);
@@ -1434,7 +1434,7 @@ namespace wtKST
             // 
             // textBox3
             // 
-            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_0", true));
+            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_0", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.textBox3.Location = new System.Drawing.Point(90, 235);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(374, 20);
@@ -1452,7 +1452,7 @@ namespace wtKST
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M0", true));
+            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M0", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox2.Location = new System.Drawing.Point(70, 238);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(15, 14);
@@ -1461,7 +1461,7 @@ namespace wtKST
             // 
             // textBox4
             // 
-            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_7", true));
+            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_7", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.textBox4.Location = new System.Drawing.Point(90, 160);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(374, 20);
@@ -1479,7 +1479,7 @@ namespace wtKST
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M7", true));
+            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M7", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox3.Location = new System.Drawing.Point(70, 163);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(15, 14);
@@ -1488,7 +1488,7 @@ namespace wtKST
             // 
             // textBox5
             // 
-            this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_8", true));
+            this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_8", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.textBox5.Location = new System.Drawing.Point(90, 185);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(374, 20);
@@ -1506,7 +1506,7 @@ namespace wtKST
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M8", true));
+            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M8", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.checkBox4.Location = new System.Drawing.Point(70, 188);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(15, 14);
@@ -1515,7 +1515,7 @@ namespace wtKST
             // 
             // tB_macro_2
             // 
-            this.tB_macro_2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_2", true));
+            this.tB_macro_2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_2", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_2.Location = new System.Drawing.Point(90, 35);
             this.tB_macro_2.Name = "tB_macro_2";
             this.tB_macro_2.Size = new System.Drawing.Size(374, 20);
@@ -1535,7 +1535,7 @@ namespace wtKST
             this.cB_macro_2.AutoSize = true;
             this.cB_macro_2.Checked = true;
             this.cB_macro_2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M2", true));
+            this.cB_macro_2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M2", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_2.Location = new System.Drawing.Point(70, 38);
             this.cB_macro_2.Name = "cB_macro_2";
             this.cB_macro_2.Size = new System.Drawing.Size(15, 14);
@@ -1544,7 +1544,7 @@ namespace wtKST
             // 
             // tB_macro_5
             // 
-            this.tB_macro_5.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_5", true));
+            this.tB_macro_5.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_5", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_5.Location = new System.Drawing.Point(90, 110);
             this.tB_macro_5.Name = "tB_macro_5";
             this.tB_macro_5.Size = new System.Drawing.Size(374, 20);
@@ -1564,7 +1564,7 @@ namespace wtKST
             this.cB_macro_5.AutoSize = true;
             this.cB_macro_5.Checked = true;
             this.cB_macro_5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M5", true));
+            this.cB_macro_5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M5", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_5.Location = new System.Drawing.Point(70, 113);
             this.cB_macro_5.Name = "cB_macro_5";
             this.cB_macro_5.Size = new System.Drawing.Size(15, 14);
@@ -1573,7 +1573,7 @@ namespace wtKST
             // 
             // tB_macro_6
             // 
-            this.tB_macro_6.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_6", true));
+            this.tB_macro_6.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_6", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_6.Location = new System.Drawing.Point(90, 135);
             this.tB_macro_6.Name = "tB_macro_6";
             this.tB_macro_6.Size = new System.Drawing.Size(374, 20);
@@ -1593,7 +1593,7 @@ namespace wtKST
             this.cB_macro_6.AutoSize = true;
             this.cB_macro_6.Checked = true;
             this.cB_macro_6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M6", true));
+            this.cB_macro_6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M6", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_6.Location = new System.Drawing.Point(70, 138);
             this.cB_macro_6.Name = "cB_macro_6";
             this.cB_macro_6.Size = new System.Drawing.Size(15, 14);
@@ -1602,7 +1602,7 @@ namespace wtKST
             // 
             // tB_macro_3
             // 
-            this.tB_macro_3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_3", true));
+            this.tB_macro_3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_3", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_3.Location = new System.Drawing.Point(90, 60);
             this.tB_macro_3.Name = "tB_macro_3";
             this.tB_macro_3.Size = new System.Drawing.Size(374, 20);
@@ -1622,7 +1622,7 @@ namespace wtKST
             this.cB_macro_3.AutoSize = true;
             this.cB_macro_3.Checked = true;
             this.cB_macro_3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M3", true));
+            this.cB_macro_3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M3", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_3.Location = new System.Drawing.Point(70, 63);
             this.cB_macro_3.Name = "cB_macro_3";
             this.cB_macro_3.Size = new System.Drawing.Size(15, 14);
@@ -1631,7 +1631,7 @@ namespace wtKST
             // 
             // tB_macro_4
             // 
-            this.tB_macro_4.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_4", true));
+            this.tB_macro_4.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_4", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_4.Location = new System.Drawing.Point(90, 85);
             this.tB_macro_4.Name = "tB_macro_4";
             this.tB_macro_4.Size = new System.Drawing.Size(374, 20);
@@ -1651,7 +1651,7 @@ namespace wtKST
             this.cB_macro_4.AutoSize = true;
             this.cB_macro_4.Checked = true;
             this.cB_macro_4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M4", true));
+            this.cB_macro_4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M4", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_4.Location = new System.Drawing.Point(70, 88);
             this.cB_macro_4.Name = "cB_macro_4";
             this.cB_macro_4.Size = new System.Drawing.Size(15, 14);
@@ -1660,7 +1660,7 @@ namespace wtKST
             // 
             // tB_macro_1
             // 
-            this.tB_macro_1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_1", true));
+            this.tB_macro_1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::wtKST.Properties.Settings.Default, "KST_Macro_1", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.tB_macro_1.Location = new System.Drawing.Point(90, 10);
             this.tB_macro_1.Name = "tB_macro_1";
             this.tB_macro_1.Size = new System.Drawing.Size(374, 20);
@@ -1680,7 +1680,7 @@ namespace wtKST
             this.cB_macro_1.AutoSize = true;
             this.cB_macro_1.Checked = true;
             this.cB_macro_1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_macro_1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M1", true));
+            this.cB_macro_1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::wtKST.Properties.Settings.Default, "KST_M1", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation));
             this.cB_macro_1.Location = new System.Drawing.Point(70, 13);
             this.cB_macro_1.Name = "cB_macro_1";
             this.cB_macro_1.Size = new System.Drawing.Size(15, 14);

@@ -19,9 +19,9 @@ namespace wtKST
 
         private void InitializeBindings()
         {
-            this.chb_Advanced_WinTest_Network.DataBindings.Add(new Binding("Checked", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_Activate", true, DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.DataBindings.Add(new Binding("Text", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_BroadcastIP", true, DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox2.DataBindings.Add(new Binding("Text", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_UDPPort", true, DataSourceUpdateMode.OnPropertyChanged));
+            this.chb_Advanced_WinTest_Network.DataBindings.Add(new Binding("Checked", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_Activate", true, DataSourceUpdateMode.OnValidation));
+            this.textBox1.DataBindings.Add(new Binding("Text", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_BroadcastIP", true, DataSourceUpdateMode.OnValidation));
+            this.textBox2.DataBindings.Add(new Binding("Text", global::wtKST.Properties.Settings.Default, "AdvancedWinTestNetwork_UDPPort", true, DataSourceUpdateMode.OnValidation));
         }
 
         private void SetDefaultValues()
@@ -40,11 +40,13 @@ namespace wtKST
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
+            if (!this.ValidateChildren())
+            {
+                return;
+            }
+
             if (ValidateIPAddress(this.textBox1.Text) && ValidateUDPPort(this.textBox2.Text))
             {
-                global::wtKST.Properties.Settings.Default.AdvancedWinTestNetwork_Activate = this.chb_Advanced_WinTest_Network.Checked;
-                global::wtKST.Properties.Settings.Default.AdvancedWinTestNetwork_BroadcastIP = this.textBox1.Text;
-                global::wtKST.Properties.Settings.Default.AdvancedWinTestNetwork_UDPPort = this.textBox2.Text;
                 global::wtKST.Properties.Settings.Default.Save();
                 WinTest.WinTest.advancedWinTestPort = int.Parse(Settings.Default.AdvancedWinTestNetwork_UDPPort);
                 WinTest.WinTest.advancedNetActivated = Settings.Default.AdvancedWinTestNetwork_Activate;
@@ -59,6 +61,7 @@ namespace wtKST
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            Settings.Default.Reload();
             this.Close();
         }
 
