@@ -960,6 +960,7 @@ namespace wtKST.Properties {
             }
         }
 
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
@@ -995,5 +996,6 @@ namespace wtKST.Properties {
                 this["AdvancedWinTestNetwork_UDPPort"] = value;
             }
         }
+
     }
 }

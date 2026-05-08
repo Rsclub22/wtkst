@@ -236,6 +236,7 @@
     <Setting Name="WS_API_URL" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.airscout.app/airscout/api/v1</Value>
     </Setting>
+
     <Setting Name="AdvancedWinTestNetwork_Activate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
